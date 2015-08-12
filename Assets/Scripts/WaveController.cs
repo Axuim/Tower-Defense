@@ -23,6 +23,7 @@ public class WaveController : MonoBehaviour
 
     #endregion
 
+    //TODO: Remove after done testing
     void Start()
     {
         this.Begin();
@@ -116,17 +117,23 @@ public class WaveController : MonoBehaviour
 
         yield return null;
 
+        int spawnedCount = 0;
+        int enemiesToSpawn = Mathf.RoundToInt(waveInfo.BaseSpawnCount * Mathf.Pow(waveInfo.WaveNumberSpawnCountMultiplier, waveNumber));
         float nextSpawnTime = Time.time;
-        float spawnTimeDelta = (waveInfo.Duration * waveInfo.SpawnPeriod) / (waveInfo.BaseSpawnCount * Mathf.Pow(waveInfo.WaveNumberSpawnCountMultiplier, waveNumber));
-        while (Time.time >= nextSpawnTime)
+        float spawnTimeDelta = (waveInfo.Duration * waveInfo.SpawnPeriod) / enemiesToSpawn;
+        while (spawnedCount < enemiesToSpawn)
         {
             foreach (var spawner in _spawners)
             {
                 spawner.Spawn(waveInfo.EnemyPrefab);
             }
             nextSpawnTime += spawnTimeDelta;
+            spawnedCount++;
 
-            yield return null;
+            while (Time.time < nextSpawnTime)
+            {
+                yield return null;
+            }
         }
     }
 

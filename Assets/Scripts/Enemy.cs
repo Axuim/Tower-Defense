@@ -23,9 +23,17 @@ public class Enemy : MonoBehaviour
 
     #endregion
 
-    #region Events
+    #region Public Properties
 
-    public event EventHandler TargetReached;
+    [SerializeField]
+    private int _damage = 1;
+    public int Damage
+    {
+        get
+        {
+            return _damage;
+        }
+    }
 
     #endregion
 
@@ -150,10 +158,7 @@ public class Enemy : MonoBehaviour
         {
             if (_pathIndex >= _path.vectorPath.Count)
             {
-                if (this.TargetReached != null)
-                {
-                    this.TargetReached(this, null);
-                }
+                this.TargetReached();
                 this.enabled = false;
             }
             else
@@ -172,6 +177,15 @@ public class Enemy : MonoBehaviour
                 //Local avoidance and collision later maybe.
                 this.transform.position += direction;
             }
+        }
+    }
+
+    private void TargetReached()
+    {
+        if (_target != null)
+        {
+            _target.TakeDamage(this.Damage);
+            GameObject.Destroy(this.gameObject);
         }
     }
 

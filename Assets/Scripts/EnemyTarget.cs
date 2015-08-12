@@ -6,10 +6,6 @@ using System;
 
 public class EnemyTarget : MonoBehaviour
 {
-    #region Private Properties
-
-    #endregion
-
     #region Public Properties
 
     private static List<EnemyTarget> _instances = new List<EnemyTarget>();
@@ -27,7 +23,49 @@ public class EnemyTarget : MonoBehaviour
     {
         get
         {
-            return false;
+            return this.Health == 0;
+        }
+    }
+
+    [SerializeField]
+    private int _maxHealth = 10;
+    public int MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+    }
+
+    private int _health;
+    public int Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            if (value != _health)
+            {
+                if (value < 0)
+                {
+                    _health = 0;
+                }
+                else if (value > this.MaxHealth)
+                {
+                    _health = this.MaxHealth;
+                }
+                else
+                {
+                    _health = value;
+                }
+
+                if (this.Health <= 0 && this.Destroyed != null)
+                {
+                    this.Destroyed(this, null);
+                }
+            }
         }
     }
 
@@ -44,6 +82,8 @@ public class EnemyTarget : MonoBehaviour
     void Awake()
     {
         _instances.Add(this);
+
+        this.Health = this.MaxHealth;
     }
 
     void OnDestroy()
@@ -94,6 +134,11 @@ public class EnemyTarget : MonoBehaviour
         }
 
         return result;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        this.Health -= damage;
     }
 
     #endregion
