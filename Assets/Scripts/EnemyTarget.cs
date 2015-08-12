@@ -61,9 +61,14 @@ public class EnemyTarget : MonoBehaviour
                     _health = value;
                 }
 
-                if (this.Health <= 0 && this.Destroyed != null)
+                if (this.Health <= 0)
                 {
-                    this.Destroyed(this, null);
+                    if (this.Killed != null)
+                    {
+                        this.Killed(this, null);
+                    }
+
+                    GameObject.Destroy(this.gameObject);
                 }
             }
         }
@@ -73,7 +78,9 @@ public class EnemyTarget : MonoBehaviour
 
     #region Events
 
-    public event EventHandler Destroyed;
+    public static EventHandler Instantiated;
+    public static EventHandler Destroyed;
+    public event EventHandler Killed;
 
     #endregion
 
@@ -83,12 +90,22 @@ public class EnemyTarget : MonoBehaviour
     {
         _instances.Add(this);
 
+        if (Instantiated != null)
+        {
+            Instantiated(this, null);
+        }
+
         this.Health = this.MaxHealth;
     }
 
     void OnDestroy()
     {
         _instances.Remove(this);
+
+        if (Destroyed != null)
+        {
+            Destroyed(this, null);
+        }
     }
 
     #endregion

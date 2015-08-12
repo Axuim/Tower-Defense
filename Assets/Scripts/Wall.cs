@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-[RequireComponent(typeof(Collider))]
 public class Wall : MonoBehaviour
 {
     #region Events

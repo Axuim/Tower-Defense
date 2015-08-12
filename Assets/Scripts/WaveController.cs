@@ -127,7 +127,7 @@ public class WaveController : MonoBehaviour
             {
                 spawner.Spawn(waveInfo.EnemyPrefab);
             }
-            nextSpawnTime += spawnTimeDelta;
+            nextSpawnTime = Time.time + spawnTimeDelta;
             spawnedCount++;
 
             while (Time.time < nextSpawnTime)

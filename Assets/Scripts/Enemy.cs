@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 {
     #region Private Properties
 
-    private float ADVANCE_WAYPOINT_DISTANCE = 0.1f;
+    private float SAME_POSITION_EPSILON = 0.1f;
 
     private Seeker _seeker;
 
@@ -26,6 +26,53 @@ public class Enemy : MonoBehaviour
     #region Public Properties
 
     [SerializeField]
+    private int _maxHealth = 3;
+    public int MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+    }
+
+    private int _health;
+    public int Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            if (value != _health)
+            {
+                if (value < 0)
+                {
+                    _health = 0;
+                }
+                else if (value > this.MaxHealth)
+                {
+                    _health = this.MaxHealth;
+                }
+                else
+                {
+                    _health = value;
+                }
+
+                if (this.Health <= 0)
+                {
+                    if (this.Killed != null)
+                    {
+                        this.Killed(this, null);
+                    }
+
+                    GameObject.Destroy(this.gameObject);
+                }
+            }
+        }
+    }
+
+    [SerializeField]
     private int _damage = 1;
     public int Damage
     {
@@ -37,11 +84,34 @@ public class Enemy : MonoBehaviour
 
     #endregion
 
+    #region Events
+
+    public static EventHandler Instantiated;
+    public static EventHandler Destroyed;
+    public event EventHandler Killed;
+
+    #endregion
+
     #region MonoBehaviour
 
     void Awake()
     {
         _seeker = this.GetComponent<Seeker>();
+
+        if (Instantiated != null)
+        {
+            Instantiated(this, null);
+        }
+
+        this.Health = this.MaxHealth;
+    }
+
+    void OnDestroy()
+    {
+        if (Destroyed != null)
+        {
+            Destroyed(this, null);
+        }
     }
 
     void Start()
@@ -62,7 +132,7 @@ public class Enemy : MonoBehaviour
         //Cleanup and remove events
         if (_target != null)
         {
-            _target.Destroyed -= this.TargetDestroyedHandler;
+            _target.Killed -= this.TargetDestroyedHandler;
             _target = null;
         }
 
@@ -83,7 +153,16 @@ public class Enemy : MonoBehaviour
             this.MoveTowardsTarget();
         }
     }
-    
+
+    #endregion
+
+    #region Public Methods
+
+    public void TakeDamage(int damage)
+    {
+        this.Health -= damage;
+    }
+
     #endregion
 
     #region Private Methods
@@ -105,7 +184,7 @@ public class Enemy : MonoBehaviour
     {
         if (_target != null)
         {
-            _target.Destroyed -= this.TargetDestroyedHandler;
+            _target.Killed -= this.TargetDestroyedHandler;
         }
 
         _target = EnemyTarget.ClosestInstanceTo(this.transform.position, EnemyTarget.NotDestroyedPredicate);
@@ -116,7 +195,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            _target.Destroyed += this.TargetDestroyedHandler;
+            _target.Killed += this.TargetDestroyedHandler;
             this.PathTo(_target.transform.position);
         }
     }
@@ -165,7 +244,7 @@ public class Enemy : MonoBehaviour
             {
                 var targetPosition = _path.vectorPath[_pathIndex];
 
-                if (Vector3.Distance(this.transform.position, targetPosition) < ADVANCE_WAYPOINT_DISTANCE)
+                if (Vector3.Distance(this.transform.position, targetPosition) < SAME_POSITION_EPSILON)
                 {
                     _pathIndex++;
                 }
