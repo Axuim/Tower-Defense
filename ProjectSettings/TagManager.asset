@@ -35,8 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Astar Obstacle
+  - Astar Ground
   m_SortingLayers:
   - name: Default
     uniqueID: 0
