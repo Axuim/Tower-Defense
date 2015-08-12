@@ -27,8 +27,18 @@ public class WaveInfo
     }
 
     [SerializeField]
-    private GameObject _enemyPrefab;
-    public GameObject EnemyPrefab
+    private float _spawnPeriod;
+    public float SpawnPeriod
+    {
+        get
+        {
+            return _spawnPeriod;
+        }
+    }
+
+    [SerializeField]
+    private Enemy _enemyPrefab;
+    public Enemy EnemyPrefab
     {
         get
         {
@@ -37,22 +47,22 @@ public class WaveInfo
     }
 
     [SerializeField]
-    private float _spawnCount;
-    public float SpawnCount
+    private float _baseSpawnCount;
+    public float BaseSpawnCount
     {
         get
         {
-            return _spawnCount;
+            return _baseSpawnCount;
         }
     }
 
     [SerializeField]
-    private float _spawnInterval;
-    public float SpawnInterval
+    private float _waveNumberSpawnCountMultiplier;
+    public float WaveNumberSpawnCountMultiplier
     {
         get
         {
-            return _spawnInterval;
+            return _waveNumberSpawnCountMultiplier;
         }
     }
 

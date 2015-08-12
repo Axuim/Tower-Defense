@@ -11,9 +11,9 @@ public class WaveController : MonoBehaviour
     private bool _started = false;
 
     [SerializeField]
-    private List<Spawner> _spawners;
+    private Spawner[] _spawners;
     [SerializeField]
-    private List<WaveInfo> _waves;
+    private WaveInfo[] _waves;
 
     #endregion
 
@@ -23,13 +23,18 @@ public class WaveController : MonoBehaviour
 
     #endregion
 
+    void Start()
+    {
+        this.Begin();
+    }
+
     #region Public Methods
 
     public bool Begin()
     {
         bool result = false;
 
-        if (_started)
+        if (_started == false)
         {
             _started = true;
             StartCoroutine("AdvanceWaveCoroutine");
@@ -47,24 +52,34 @@ public class WaveController : MonoBehaviour
         {
             _started = false;
             StopCoroutine("AdvanceWaveCoroutine");
+            StopCoroutine("SpawnWaveCoroutine");
             result = true;
         }
 
         return result;
     }
+    
+    #endregion
 
-    public WaveInfo StartWave(int wave)
+    #region Private Methods
+
+    private WaveInfo StartRandomWave(int waveNumber)
+    {
+        return this.StartWave(UnityEngine.Random.Range(0, _waves.Length), waveNumber);
+    }
+
+    private WaveInfo StartWave(int waveIndex, int waveNumber)
     {
         WaveInfo result = null;
-        
-        if (_waves.Count > wave)
+
+        if (waveIndex >= 0 && _waves.Length > waveIndex)
         {
-            result = _waves[wave];
+            result = _waves[waveIndex];
             if (this.WaveStarted != null)
             {
-                this.WaveStarted(this, new WaveEventArgs(result, wave));
+                this.WaveStarted(this, new WaveEventArgs(result, waveIndex));
             }
-            this.StartCoroutine(this.SpawnWaveCoroutine(result));
+            this.StartCoroutine("SpawnWaveCoroutine", new object[] { waveNumber, result });
         }
 
         return result;
@@ -77,36 +92,39 @@ public class WaveController : MonoBehaviour
     private IEnumerator AdvanceWaveCoroutine()
     {
         yield return null;
-        
-        int wave = 0;
-        WaveInfo waveInfo = this.StartWave(wave);
+
+        WaveInfo waveInfo = null;
+        int waveNumber = 0;
         float nextWaveTime = 0.0f;
 
-        while (waveInfo != null)
+        while (true)
         {
+            waveInfo = this.StartRandomWave(waveNumber);
             nextWaveTime = Time.time + waveInfo.Duration;
             while (nextWaveTime > Time.time)
             {
                 yield return null;
             }
-
-            waveInfo = this.StartWave(wave);
-            wave++;
+            waveNumber++;
         }
     }
 
-    private IEnumerator SpawnWaveCoroutine(WaveInfo waveInfo)
+    private IEnumerator SpawnWaveCoroutine(object[] args)
     {
+        int waveNumber = (int)args[0];
+        WaveInfo waveInfo = args[1] as WaveInfo;
+
         yield return null;
 
         float nextSpawnTime = Time.time;
+        float spawnTimeDelta = (waveInfo.Duration * waveInfo.SpawnPeriod) / (waveInfo.BaseSpawnCount * Mathf.Pow(waveInfo.WaveNumberSpawnCountMultiplier, waveNumber));
         while (Time.time >= nextSpawnTime)
         {
             foreach (var spawner in _spawners)
             {
                 spawner.Spawn(waveInfo.EnemyPrefab);
             }
-            nextSpawnTime += waveInfo.SpawnInterval;
+            nextSpawnTime += spawnTimeDelta;
 
             yield return null;
         }

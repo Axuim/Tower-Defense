@@ -6,24 +6,22 @@ using System.Linq;
 
 public class Spawner : MonoBehaviour
 {
-    #region Private Properties
-
-    #endregion
-
-    #region Public Properties
-
-    #endregion
-
     #region Public Methods
 
-    public void Spawn(GameObject prefab)
+    public Enemy Spawn(Enemy prefab)
     {
+        Enemy result = null;
 
+        if (prefab != null)
+        {
+            result = GameObject.Instantiate<Enemy>(prefab);
+            result.transform.parent = this.transform;
+            result.transform.localPosition = Vector3.zero;
+            result.transform.localRotation = Quaternion.identity;
+        }
+
+        return result;
     }
-
-    #endregion
-
-    #region Private Methods
 
     #endregion
 }
