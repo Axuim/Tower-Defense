@@ -6,7 +6,7 @@ using Pathfinding;
 using System;
 
 [RequireComponent(typeof(Seeker))]
-public class Enemy : MonoBehaviour, IKillable
+public class Enemy : MonoBehaviour, IAmKillable
 {
     #region Private Properties
 
@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour, IKillable
 
     void OnEnable()
     {
+        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
         Wall.PathUpdated += this.WallsChangedHandler;
     }
 
@@ -86,6 +87,7 @@ public class Enemy : MonoBehaviour, IKillable
             _target = null;
         }
 
+        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
         Wall.PathUpdated -= this.WallsChangedHandler;
         
         this.CleanupPath();
@@ -104,31 +106,9 @@ public class Enemy : MonoBehaviour, IKillable
     }
 
     #endregion
-
-    #region Public Methods
-
-    public void TakeDamage(int damage)
-    {
-        this.Health -= damage;
-    }
-
-    #endregion
-
+    
     #region Private Methods
-
-    private void TargetDestroyedHandler(object sender, EventArgs args)
-    {
-        this.SetupTarget();
-    }
-
-    private void WallsChangedHandler(object sender, EventArgs args)
-    {
-        if (_target != null)
-        {
-            this.PathTo(_target.transform.position);
-        }
-    }
-
+    
     private void SetupTarget()
     {
         if (_target != null)
@@ -138,12 +118,7 @@ public class Enemy : MonoBehaviour, IKillable
 
         //Find the closest objective "As the bird flies"
         _target = Objective.ClosestInstanceTo(this.transform.position, Objective.NotDestroyedPredicate);
-        if (_target == null)
-        {
-            //No targets
-            this.enabled = false;
-        }
-        else
+        if (_target != null)
         {
             _target.Killed += this.TargetDestroyedHandler;
             this.PathTo(_target.transform.position);
@@ -188,7 +163,6 @@ public class Enemy : MonoBehaviour, IKillable
             if (_pathIndex >= _path.vectorPath.Count)
             {
                 this.TargetReached();
-                this.enabled = false;
             }
             else
             {
@@ -220,7 +194,32 @@ public class Enemy : MonoBehaviour, IKillable
 
     #endregion
 
-    #region IKillable
+    #region Event Handlers
+
+    private void GameStateChangedHandler(object sender, EventArgs args)
+    {
+        if (GameStateManager.GameState == GameStates.Preparing)
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+    }
+
+    private void TargetDestroyedHandler(object sender, EventArgs args)
+    {
+        this.SetupTarget();
+    }
+
+    private void WallsChangedHandler(object sender, EventArgs args)
+    {
+        if (_target != null)
+        {
+            this.PathTo(_target.transform.position);
+        }
+    }
+
+    #endregion
+
+    #region IAmKillable
 
     public event EventHandler Killed;
 
@@ -269,6 +268,11 @@ public class Enemy : MonoBehaviour, IKillable
                 }
             }
         }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        this.Health -= amount;
     }
 
     #endregion

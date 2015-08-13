@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 
 [RequireComponent(typeof(Collider))]
-public class Wall : MonoBehaviour, ISelectable
+public class Wall : MonoBehaviour, IAmSelectable
 {
     #region Private Properties
 
@@ -66,8 +66,15 @@ public class Wall : MonoBehaviour, ISelectable
         }
     }
 
+    void OnEnable()
+    {
+        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
+    }
+
     void OnDestroy()
     {
+        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
+
         _instances.Remove(this);
 
         if (AstarPath.active != null)
@@ -88,34 +95,52 @@ public class Wall : MonoBehaviour, ISelectable
 
     #endregion
 
-    #region ISelectable
+    #region Event Handlers
 
-    public bool IsSelected { get; private set; }
-
-    public bool Select()
+    private void GameStateChangedHandler(object sender, EventArgs args)
     {
-        bool result = false;
-
-        if (this.IsSelected == false)
+        if (GameStateManager.GameState == GameStates.Preparing)
         {
-            //TODO: Add selection logic
-
-            this.IsSelected = true;
-            result = true;
+            GameObject.Destroy(this.gameObject);
         }
-
-        return result;
     }
 
-    public bool Deselect()
+    #endregion
+
+    #region IAmSelectable
+
+    private bool _selected = false;
+    public bool Selected
+    {
+        get
+        {
+            return _selected;
+        }
+        private set
+        {
+            if (value != _selected)
+            {
+                _selected = value;
+
+                if (_selected)
+                {
+                    //TODO: Selection Logic
+                }
+                else
+                {
+                    //TODO: Deselection Logic
+                }
+            }
+        }
+    }
+
+    public bool SetSelected(bool value)
     {
         bool result = false;
 
-        if (this.IsSelected)
+        if (value != this.Selected)
         {
-            //TODO: Add deselection logic
-
-            this.IsSelected = false;
+            this.Selected = value;
             result = true;
         }
 

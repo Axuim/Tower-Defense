@@ -5,7 +5,7 @@ using System.Linq;
 
 #region Enums
 
-public enum GameStates { None, Playing, Building, Upgrading }
+public enum GameStates { Preparing, Playing, Building, Upgrading, Loss }
 
 #endregion
 
@@ -13,7 +13,7 @@ public static class GameStateManager
 {
     #region Private Properties
 
-    private const GameStates DEFAULT_STATE = GameStates.None;
+    private const GameStates DEFAULT_STATE = GameStates.Preparing;
 
     private static Stack<GameStates> _previousStates;
 

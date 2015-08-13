@@ -36,13 +36,12 @@ public class WallBuilder : MonoBehaviour
         _buildingWall.transform.parent = this.transform;
         _buildingWall.gameObject.SetActive(false);
 
-        GameStateManager.GameStateChanged += this.HandleGameStateChanged;
-        this.HandleGameStateChanged(this, null);
+        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
     }
 
     void OnDestroy()
     {
-        GameStateManager.GameStateChanged -= this.HandleGameStateChanged;
+        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
     }
 
     void OnEnable()
@@ -88,9 +87,9 @@ public class WallBuilder : MonoBehaviour
 
     #endregion
 
-    #region Private Methods
+    #region Event Handlers
 
-    private void HandleGameStateChanged(object sender, EventArgs args)
+    private void GameStateChangedHandler(object sender, EventArgs args)
     {
         if (GameStateManager.GameState == GameStates.Building)
         {

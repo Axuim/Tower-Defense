@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class Objective : MonoBehaviour, IKillable
+public class Objective : MonoBehaviour, IAmKillable, IHaveGraphics
 {
     #region Public Properties
 
@@ -47,7 +47,17 @@ public class Objective : MonoBehaviour, IKillable
             Instantiated(this, null);
         }
 
-        this.Health = this.MaxHealth;
+        this.Initialize();
+    }
+
+    void OnEnable()
+    {
+        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
+    }
+
+    void OnDisable()
+    {
+        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
     }
 
     void OnDestroy()
@@ -74,14 +84,14 @@ public class Objective : MonoBehaviour, IKillable
         return Objective.ClosestInstanceTo(worldPosition, Objective.Instances.Where(et => predicate(et)));
     }
 
-    public void TakeDamage(int damage)
-    {
-        this.Health -= damage;
-    }
-
     #endregion
 
     #region Private Methods
+
+    private void Initialize()
+    {
+        this.Health = this.MaxHealth;
+    }
 
     private static Objective ClosestInstanceTo(Vector3 worldPosition, IEnumerable<Objective> instances)
     {
@@ -104,7 +114,19 @@ public class Objective : MonoBehaviour, IKillable
 
     #endregion
 
-    #region IKillable
+    #region Event Handlers
+    
+    private void GameStateChangedHandler(object sender, EventArgs args)
+    {
+        if (GameStateManager.GameState == GameStates.Preparing)
+        {
+            this.Initialize();
+        }
+    }
+
+    #endregion
+
+    #region IAmKillable
 
     public event EventHandler Killed;
 
@@ -144,15 +166,71 @@ public class Objective : MonoBehaviour, IKillable
 
                 if (this.Health <= 0)
                 {
+                    this.SetRendering(false);
+
                     if (this.Killed != null)
                     {
                         this.Killed(this, null);
                     }
-
-                    GameObject.Destroy(this.gameObject);
+                }
+                else
+                {
+                    this.SetRendering(true);
                 }
             }
         }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        this.Health -= amount;
+    }
+
+    #endregion
+
+    #region IHaveGraphics
+    
+    public bool Rendering
+    {
+        get
+        {
+            bool result = false;
+            if (this.Graphics != null)
+            {
+                result = this.Graphics.activeSelf;
+            }
+            return result;
+        }
+        private set
+        {
+            if (this.Graphics != null && value != this.Rendering)
+            {
+                this.Graphics.SetActive(value);
+            }
+        }
+    }
+
+    [SerializeField]
+    private GameObject _graphics;
+    public GameObject Graphics
+    {
+        get
+        {
+            return _graphics;
+        }
+    }
+    
+    public bool SetRendering(bool value)
+    {
+        bool result = false;
+
+        if (this.Rendering != value)
+        {
+            this.Rendering = value;
+            result = true;
+        }
+
+        return result;
     }
 
     #endregion

@@ -6,6 +6,12 @@ using System.Linq;
 
 public class WaveController : MonoBehaviour
 {
+    #region Singleton
+
+    public static WaveController Singleton { get; private set; }
+
+    #endregion
+
     #region Private Properties
 
     private bool _started = false;
@@ -25,13 +31,14 @@ public class WaveController : MonoBehaviour
 
     void Awake()
     {
-        GameStateManager.GameStateChanged += this.HandleGameStateChanged;
-        this.HandleGameStateChanged(this, null);
+        Singleton = this;
+
+        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
     }
 
     void OnDestroy()
     {
-        GameStateManager.GameStateChanged -= this.HandleGameStateChanged;
+        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
     }
 
     #endregion
@@ -70,19 +77,7 @@ public class WaveController : MonoBehaviour
     #endregion
 
     #region Private Methods
-
-    private void HandleGameStateChanged(object sender, EventArgs args)
-    {
-        if (GameStateManager.GameState == GameStates.Playing)
-        {
-            this.Begin();
-        }
-        else if (GameStateManager.GameState == GameStates.None)
-        {
-            this.Stop();
-        }
-    }
-
+    
     private WaveInfo StartRandomWave(int waveNumber)
     {
         return this.StartWave(UnityEngine.Random.Range(0, _waves.Length), waveNumber);
@@ -97,12 +92,28 @@ public class WaveController : MonoBehaviour
             result = _waves[waveIndex];
             if (this.WaveStarted != null)
             {
-                this.WaveStarted(this, new WaveEventArgs(result, waveIndex));
+                this.WaveStarted(this, new WaveEventArgs(result, waveNumber));
             }
             this.StartCoroutine("SpawnWaveCoroutine", new object[] { waveNumber, result });
         }
 
         return result;
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    private void GameStateChangedHandler(object sender, EventArgs args)
+    {
+        if (GameStateManager.GameState == GameStates.Playing)
+        {
+            this.Begin();
+        }
+        else if (GameStateManager.GameState == GameStates.Preparing || GameStateManager.GameState == GameStates.Loss)
+        {
+            this.Stop();
+        }
     }
 
     #endregion

@@ -6,7 +6,7 @@ using System;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public abstract class Tower : MonoBehaviour, ISelectable
+public abstract class Tower : MonoBehaviour
 {
     #region Private Properties
 
@@ -66,14 +66,6 @@ public abstract class Tower : MonoBehaviour, ISelectable
 
     #region Private Methods
 
-    private void EnemyDestroyedHandler(object sender, EventArgs args)
-    {
-        if (sender is Enemy)
-        {
-            _targetQueue.Remove(sender as Enemy);
-        }
-    }
-
     protected virtual bool Shoot()
     {
         bool result = false;
@@ -90,38 +82,14 @@ public abstract class Tower : MonoBehaviour, ISelectable
 
     #endregion
 
-    #region ISelectable
+    #region Event Handlers
 
-    public bool IsSelected { get; private set; }
-
-    public bool Select()
+    private void EnemyDestroyedHandler(object sender, EventArgs args)
     {
-        bool result = false;
-
-        if (this.IsSelected == false)
+        if (sender is Enemy)
         {
-            //TODO: Add selection logic
-
-            this.IsSelected = true;
-            result = true;
+            _targetQueue.Remove(sender as Enemy);
         }
-
-        return result;
-    }
-
-    public bool Deselect()
-    {
-        bool result = false;
-
-        if (this.IsSelected)
-        {
-            //TODO: Add deselection logic
-
-            this.IsSelected = false;
-            result = true;
-        }
-
-        return result;
     }
 
     #endregion
