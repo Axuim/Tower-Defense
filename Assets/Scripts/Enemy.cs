@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     private Seeker _seeker;
 
-    private EnemyTarget _target;
+    private Objective _target;
     private Path _path;
     private int _pathIndex;
 
@@ -187,7 +187,7 @@ public class Enemy : MonoBehaviour
             _target.Killed -= this.TargetDestroyedHandler;
         }
 
-        _target = EnemyTarget.ClosestInstanceTo(this.transform.position, EnemyTarget.NotDestroyedPredicate);
+        _target = Objective.ClosestInstanceTo(this.transform.position, Objective.NotDestroyedPredicate);
         if (_target == null)
         {
             //No targets

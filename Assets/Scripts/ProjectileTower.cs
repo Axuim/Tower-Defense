@@ -15,12 +15,7 @@ public class ProjectileTower : Tower
     #endregion
 
     #region MonoBehaviour
-
-    void Update()
-    {
-        this.ShootAtTarget(this.TargetQueue.FirstOrDefault());
-    }
-
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -31,17 +26,21 @@ public class ProjectileTower : Tower
 
     #region Tower Overrides
 
-    protected override bool ShootAtTarget(Enemy target)
+    protected override bool Shoot()
     {
-        bool result = base.ShootAtTarget(target);
+        bool result = base.Shoot();
 
         if (result)
         {
-            var bullet = GameObject.Instantiate<Projectile>(_projectilePrefab);
-            bullet.transform.parent = this.transform;
-            bullet.transform.localPosition = _localBulletSpawnPosition;
-            bullet.transform.localRotation = Quaternion.identity;
-            bullet.Target = target;
+            var target = this.TargetQueue.FirstOrDefault();
+            if (target != null)
+            {
+                var bullet = GameObject.Instantiate<Projectile>(_projectilePrefab);
+                bullet.transform.parent = this.transform;
+                bullet.transform.localPosition = _localBulletSpawnPosition;
+                bullet.transform.localRotation = Quaternion.identity;
+                bullet.Target = target;
+            }
         }
 
         return result;

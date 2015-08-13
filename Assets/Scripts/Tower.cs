@@ -39,14 +39,14 @@ public abstract class Tower : MonoBehaviour
         _targetQueue.Clear();
     }
 
+    void Update()
+    {
+        this.Shoot();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         var enemy = other.GetComponent<Enemy>();
-        if (enemy == null)
-        {
-            enemy = other.GetComponentInParent<Enemy>();
-        }
-
         if (enemy != null)
         {
             _targetQueue.Add(enemy);
@@ -56,14 +56,8 @@ public abstract class Tower : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         var enemy = other.GetComponent<Enemy>();
-        if (enemy == null)
-        {
-            enemy = other.GetComponentInParent<Enemy>();
-        }
-
         if (enemy != null)
         {
-            Debug.Log("Removing enemy: " + enemy);
             _targetQueue.Remove(enemy);
         }
     }
@@ -80,18 +74,15 @@ public abstract class Tower : MonoBehaviour
         }
     }
 
-    protected virtual bool ShootAtTarget(Enemy target)
+    protected virtual bool Shoot()
     {
         bool result = false;
         
-        if (target != null)
+        if (_targetQueue.Any() && Time.time > _nextFireTime)
         {
-            if (Time.time > _nextFireTime)
-            {
-                _nextFireTime = Time.time + _fireDelay;
+            _nextFireTime = Time.time + _fireDelay;
 
-                result = true;
-            }
+            result = true;
         }
 
         return result;

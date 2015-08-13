@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class EnemyTarget : MonoBehaviour
+public class Objective : MonoBehaviour
 {
     #region Public Properties
 
-    private static List<EnemyTarget> _instances = new List<EnemyTarget>();
-    public static IEnumerable<EnemyTarget> Instances
+    private static List<Objective> _instances = new List<Objective>();
+    public static IEnumerable<Objective> Instances
     {
         get
         {
-            return _instances.ToArray();
+            return _instances;
         }
     }
     
-    public static Func<EnemyTarget, bool> NotDestroyedPredicate = new Func<EnemyTarget, bool>((EnemyTarget et) => { return et.IsDestroyed == false; });
+    public static Func<Objective, bool> NotDestroyedPredicate = new Func<Objective, bool>((Objective et) => { return et.IsDestroyed == false; });
 
     public bool IsDestroyed
     {
@@ -112,13 +112,32 @@ public class EnemyTarget : MonoBehaviour
 
     #region Public Methods
     
-    public static EnemyTarget ClosestInstanceTo(Vector3 worldPosition)
+    public static Objective ClosestInstanceTo(Vector3 worldPosition)
     {
-        EnemyTarget result = null;
+        return Objective.ClosestInstanceTo(worldPosition, Objective.Instances);
+    }
+
+    public static Objective ClosestInstanceTo(Vector3 worldPosition, Func<Objective, bool> predicate)
+    {
+        return Objective.ClosestInstanceTo(worldPosition, Objective.Instances.Where(et => predicate(et)));
+    }
+
+    public void TakeDamage(int damage)
+    {
+        this.Health -= damage;
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private static Objective ClosestInstanceTo(Vector3 worldPosition, IEnumerable<Objective> instances)
+    {
+        Objective result = null;
 
         float leastDistance = float.MaxValue;
         float distance;
-        foreach (var target in EnemyTarget.Instances)
+        foreach (var target in instances)
         {
             distance = Vector3.Distance(worldPosition, target.transform.position);
             if (distance < leastDistance)
@@ -130,37 +149,6 @@ public class EnemyTarget : MonoBehaviour
 
         return result;
     }
-
-    public static EnemyTarget ClosestInstanceTo(Vector3 worldPosition, Func<EnemyTarget, bool> predicate)
-    {
-        EnemyTarget result = null;
-
-        if (predicate != null)
-        {
-            float leastDistance = float.MaxValue;
-            float distance;
-            foreach (var target in EnemyTarget.Instances.Where(et => predicate(et)))
-            {
-                distance = Vector3.Distance(worldPosition, target.transform.position);
-                if (distance < leastDistance)
-                {
-                    result = target;
-                    leastDistance = distance;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        this.Health -= damage;
-    }
-
-    #endregion
-
-    #region Private Methods
 
     #endregion
 }
