@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 
 [RequireComponent(typeof(Collider))]
-public class Wall : MonoBehaviour
+public class Wall : MonoBehaviour, ISelectable
 {
     #region Private Properties
 
@@ -26,6 +26,8 @@ public class Wall : MonoBehaviour
             return _instances;
         }
     }
+
+    public Tower Tower { get; private set; }
 
     #endregion
 
@@ -82,6 +84,42 @@ public class Wall : MonoBehaviour
         {
             Destroyed(this, null);
         }
+    }
+
+    #endregion
+
+    #region ISelectable
+
+    public bool IsSelected { get; private set; }
+
+    public bool Select()
+    {
+        bool result = false;
+
+        if (this.IsSelected == false)
+        {
+            //TODO: Add selection logic
+
+            this.IsSelected = true;
+            result = true;
+        }
+
+        return result;
+    }
+
+    public bool Deselect()
+    {
+        bool result = false;
+
+        if (this.IsSelected)
+        {
+            //TODO: Add deselection logic
+
+            this.IsSelected = false;
+            result = true;
+        }
+
+        return result;
     }
 
     #endregion

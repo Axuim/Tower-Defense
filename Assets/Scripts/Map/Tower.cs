@@ -6,7 +6,7 @@ using System;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public abstract class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour, ISelectable
 {
     #region Private Properties
 
@@ -82,6 +82,42 @@ public abstract class Tower : MonoBehaviour
         {
             _nextFireTime = Time.time + _fireDelay;
 
+            result = true;
+        }
+
+        return result;
+    }
+
+    #endregion
+
+    #region ISelectable
+
+    public bool IsSelected { get; private set; }
+
+    public bool Select()
+    {
+        bool result = false;
+
+        if (this.IsSelected == false)
+        {
+            //TODO: Add selection logic
+
+            this.IsSelected = true;
+            result = true;
+        }
+
+        return result;
+    }
+
+    public bool Deselect()
+    {
+        bool result = false;
+
+        if (this.IsSelected)
+        {
+            //TODO: Add deselection logic
+
+            this.IsSelected = false;
             result = true;
         }
 

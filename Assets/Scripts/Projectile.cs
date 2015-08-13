@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
 {
     #region Private Properties
 
-    private float SAME_POSITION_EPSILON = 0.1f;
+    private const float SAME_POSITION_EPSILON = 0.1f;
 
     [SerializeField]
     private float _speed = 3.0f;

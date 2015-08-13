@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class Objective : MonoBehaviour
+public class Objective : MonoBehaviour, IKillable
 {
     #region Public Properties
 
@@ -27,60 +27,12 @@ public class Objective : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private int _maxHealth = 10;
-    public int MaxHealth
-    {
-        get
-        {
-            return _maxHealth;
-        }
-    }
-
-    private int _health;
-    public int Health
-    {
-        get
-        {
-            return _health;
-        }
-        private set
-        {
-            if (value != _health)
-            {
-                if (value < 0)
-                {
-                    _health = 0;
-                }
-                else if (value > this.MaxHealth)
-                {
-                    _health = this.MaxHealth;
-                }
-                else
-                {
-                    _health = value;
-                }
-
-                if (this.Health <= 0)
-                {
-                    if (this.Killed != null)
-                    {
-                        this.Killed(this, null);
-                    }
-
-                    GameObject.Destroy(this.gameObject);
-                }
-            }
-        }
-    }
-
     #endregion
 
     #region Events
 
     public static EventHandler Instantiated;
     public static EventHandler Destroyed;
-    public event EventHandler Killed;
 
     #endregion
 
@@ -148,6 +100,59 @@ public class Objective : MonoBehaviour
         }
 
         return result;
+    }
+
+    #endregion
+
+    #region IKillable
+
+    public event EventHandler Killed;
+
+    [SerializeField]
+    private int _maxHealth = 10;
+    public int MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+    }
+
+    private int _health;
+    public int Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            if (value != _health)
+            {
+                if (value < 0)
+                {
+                    _health = 0;
+                }
+                else if (value > this.MaxHealth)
+                {
+                    _health = this.MaxHealth;
+                }
+                else
+                {
+                    _health = value;
+                }
+
+                if (this.Health <= 0)
+                {
+                    if (this.Killed != null)
+                    {
+                        this.Killed(this, null);
+                    }
+
+                    GameObject.Destroy(this.gameObject);
+                }
+            }
+        }
     }
 
     #endregion

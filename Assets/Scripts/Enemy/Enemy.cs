@@ -6,7 +6,7 @@ using Pathfinding;
 using System;
 
 [RequireComponent(typeof(Seeker))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IKillable
 {
     #region Private Properties
 
@@ -26,53 +26,6 @@ public class Enemy : MonoBehaviour
     #region Public Properties
 
     [SerializeField]
-    private int _maxHealth = 3;
-    public int MaxHealth
-    {
-        get
-        {
-            return _maxHealth;
-        }
-    }
-
-    private int _health;
-    public int Health
-    {
-        get
-        {
-            return _health;
-        }
-        private set
-        {
-            if (value != _health)
-            {
-                if (value < 0)
-                {
-                    _health = 0;
-                }
-                else if (value > this.MaxHealth)
-                {
-                    _health = this.MaxHealth;
-                }
-                else
-                {
-                    _health = value;
-                }
-
-                if (this.Health <= 0)
-                {
-                    if (this.Killed != null)
-                    {
-                        this.Killed(this, null);
-                    }
-
-                    GameObject.Destroy(this.gameObject);
-                }
-            }
-        }
-    }
-
-    [SerializeField]
     private int _damage = 1;
     public int Damage
     {
@@ -88,7 +41,6 @@ public class Enemy : MonoBehaviour
 
     public static EventHandler Instantiated;
     public static EventHandler Destroyed;
-    public event EventHandler Killed;
 
     #endregion
 
@@ -262,6 +214,59 @@ public class Enemy : MonoBehaviour
         {
             _target.TakeDamage(this.Damage);
             GameObject.Destroy(this.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region IKillable
+
+    public event EventHandler Killed;
+
+    [SerializeField]
+    private int _maxHealth = 3;
+    public int MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+    }
+
+    private int _health;
+    public int Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            if (value != _health)
+            {
+                if (value < 0)
+                {
+                    _health = 0;
+                }
+                else if (value > this.MaxHealth)
+                {
+                    _health = this.MaxHealth;
+                }
+                else
+                {
+                    _health = value;
+                }
+
+                if (this.Health <= 0)
+                {
+                    if (this.Killed != null)
+                    {
+                        this.Killed(this, null);
+                    }
+
+                    GameObject.Destroy(this.gameObject);
+                }
+            }
         }
     }
 

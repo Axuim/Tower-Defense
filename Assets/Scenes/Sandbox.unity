@@ -118,7 +118,6 @@ Transform:
   - {fileID: 1359636037}
   - {fileID: 162435404}
   - {fileID: 827011554}
-  - {fileID: 574366708}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!114 &902936
@@ -689,37 +688,6 @@ Transform:
   - {fileID: 877290014}
   m_Father: {fileID: 827011554}
   m_RootOrder: 1
---- !u!1 &574366707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 574366708}
-  m_Layer: 0
-  m_Name: Towers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &574366708
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574366707}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1313817102}
-  - {fileID: 1399785683}
-  - {fileID: 1394562274}
-  - {fileID: 1883156353}
-  m_Father: {fileID: 902935}
-  m_RootOrder: 5
 --- !u!1001 &657067376
 Prefab:
   m_ObjectHideFlags: 0
@@ -783,48 +751,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 444984, guid: 7592f2644b5197948a888e8ce8dc4d9f, type: 2}
   m_PrefabInternal: {fileID: 657067376}
---- !u!1001 &736849999
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 574366708}
-    m_Modifications:
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &813819308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,10 +1211,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 444984, guid: 7592f2644b5197948a888e8ce8dc4d9f, type: 2}
   m_PrefabInternal: {fileID: 1276376254}
---- !u!4 &1313817102 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_PrefabInternal: {fileID: 736849999}
 --- !u!1 &1327426735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,106 +1277,6 @@ Transform:
   - {fileID: 1900520639}
   m_Father: {fileID: 902935}
   m_RootOrder: 2
---- !u!1001 &1394562273
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 574366708}
-    m_Modifications:
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 145756, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_Name
-      value: Basic Tower (2)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &1394562274 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_PrefabInternal: {fileID: 1394562273}
---- !u!1001 &1399785682
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 574366708}
-    m_Modifications:
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 145756, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_Name
-      value: Basic Tower (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &1399785683 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_PrefabInternal: {fileID: 1399785682}
 --- !u!1001 &1487305661
 Prefab:
   m_ObjectHideFlags: 0
@@ -1852,56 +1674,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 444984, guid: 7592f2644b5197948a888e8ce8dc4d9f, type: 2}
   m_PrefabInternal: {fileID: 1882451554}
---- !u!1001 &1883156352
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 574366708}
-    m_Modifications:
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 145756, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-      propertyPath: m_Name
-      value: Basic Tower (3)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &1883156353 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 451226, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  m_PrefabInternal: {fileID: 1883156352}
 --- !u!1 &1900520638
 GameObject:
   m_ObjectHideFlags: 0
