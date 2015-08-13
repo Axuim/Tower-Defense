@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class WallBuilder : MonoBehaviour
 {
@@ -34,6 +35,14 @@ public class WallBuilder : MonoBehaviour
         _buildingWall = GameObject.Instantiate<BuildingWall>(_buildingWallPrefab);
         _buildingWall.transform.parent = this.transform;
         _buildingWall.gameObject.SetActive(false);
+
+        GameStateManager.GameStateChanged += this.HandleGameStateChanged;
+        this.HandleGameStateChanged(this, null);
+    }
+
+    void OnDestroy()
+    {
+        GameStateManager.GameStateChanged -= this.HandleGameStateChanged;
     }
 
     void OnEnable()
@@ -79,11 +88,22 @@ public class WallBuilder : MonoBehaviour
 
     #endregion
 
-    #region Public Methods
-
-    #endregion
-
     #region Private Methods
+
+    private void HandleGameStateChanged(object sender, EventArgs args)
+    {
+        if (GameStateManager.GameState == GameStates.Building)
+        {
+            if (this.enabled == false)
+            {
+                this.enabled = true;
+            }
+        }
+        else if (this.enabled)
+        {
+            this.enabled = false;
+        }
+    }
 
     #endregion
 }

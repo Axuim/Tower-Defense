@@ -136,6 +136,7 @@ public class Enemy : MonoBehaviour, IKillable
             _target.Killed -= this.TargetDestroyedHandler;
         }
 
+        //Find the closest objective "As the bird flies"
         _target = Objective.ClosestInstanceTo(this.transform.position, Objective.NotDestroyedPredicate);
         if (_target == null)
         {

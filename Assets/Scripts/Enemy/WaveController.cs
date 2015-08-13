@@ -21,11 +21,20 @@ public class WaveController : MonoBehaviour
 
     #endregion
 
-    //TODO: Remove after done testing
-    void Start()
+    #region MonoBehaviour
+
+    void Awake()
     {
-        this.Begin();
+        GameStateManager.GameStateChanged += this.HandleGameStateChanged;
+        this.HandleGameStateChanged(this, null);
     }
+
+    void OnDestroy()
+    {
+        GameStateManager.GameStateChanged -= this.HandleGameStateChanged;
+    }
+
+    #endregion
 
     #region Public Methods
 
@@ -57,10 +66,22 @@ public class WaveController : MonoBehaviour
 
         return result;
     }
-    
+
     #endregion
 
     #region Private Methods
+
+    private void HandleGameStateChanged(object sender, EventArgs args)
+    {
+        if (GameStateManager.GameState == GameStates.Playing)
+        {
+            this.Begin();
+        }
+        else if (GameStateManager.GameState == GameStates.None)
+        {
+            this.Stop();
+        }
+    }
 
     private WaveInfo StartRandomWave(int waveNumber)
     {
