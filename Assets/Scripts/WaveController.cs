@@ -9,9 +9,7 @@ public class WaveController : MonoBehaviour
     #region Private Properties
 
     private bool _started = false;
-
-    [SerializeField]
-    private Spawner[] _spawners;
+    
     [SerializeField]
     private WaveInfo[] _waves;
 
@@ -123,7 +121,7 @@ public class WaveController : MonoBehaviour
         float spawnTimeDelta = (waveInfo.Duration * waveInfo.SpawnPeriod) / enemiesToSpawn;
         while (spawnedCount < enemiesToSpawn)
         {
-            foreach (var spawner in _spawners)
+            foreach (var spawner in Spawner.Instances)
             {
                 spawner.Spawn(waveInfo.EnemyPrefab);
             }

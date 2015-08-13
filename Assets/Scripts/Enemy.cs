@@ -122,9 +122,7 @@ public class Enemy : MonoBehaviour
 
     void OnEnable()
     {
-        //Subscribe to events that will cause us to update our path
-        Wall.Instantiated += this.WallsChangedHandler;
-        Wall.Destroyed += this.WallsChangedHandler;
+        Wall.PathUpdated += this.WallsChangedHandler;
     }
 
     void OnDisable()
@@ -136,8 +134,7 @@ public class Enemy : MonoBehaviour
             _target = null;
         }
 
-        Wall.Instantiated -= this.WallsChangedHandler;
-        Wall.Destroyed -= this.WallsChangedHandler;
+        Wall.PathUpdated -= this.WallsChangedHandler;
         
         this.CleanupPath();
     }
