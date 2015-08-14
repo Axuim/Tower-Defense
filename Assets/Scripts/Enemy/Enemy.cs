@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour, IAmKillable
 
     [SerializeField]
     private float _speed = 1.0f;
+    [SerializeField]
+    private int _money = 1;
 
     #endregion
 
@@ -273,6 +275,7 @@ public class Enemy : MonoBehaviour, IAmKillable
                         this.Killed(this, null);
                     }
 
+                    ResourceManager.GainMoney(_money);
                     GameObject.Destroy(this.gameObject);
                 }
             }
