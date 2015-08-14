@@ -139,7 +139,11 @@ public class UpgradeUI : MonoBehaviour
         {
             if (_selection != null)
             {
-                _selection.Build((sender as TowerBuildUI).Prefab);
+                var towerBuildUI = (sender as TowerBuildUI);
+                if (towerBuildUI.Prefab == null || ResourceManager.LoseMoney(towerBuildUI.Prefab.Cost))
+                {
+                    _selection.Build(towerBuildUI.Prefab);
+                }
             }
 
             this.Cancel();

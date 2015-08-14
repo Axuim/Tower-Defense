@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.ComponentModel;
+using System.Linq.Expressions;
 
 public class TowerBuildUI : MonoBehaviour
 {
@@ -52,17 +53,17 @@ public class TowerBuildUI : MonoBehaviour
 
     void Start()
     {
-
+        this.UpdateCanBuild();
     }
 
     void OnEnable()
     {
-
+        ResourceManager.PropertyChanged += this.ResourcesPropertyChangedHandler;
     }
 
     void OnDisable()
     {
-
+        ResourceManager.PropertyChanged -= this.ResourcesPropertyChangedHandler;
     }
 
     #endregion
@@ -81,6 +82,11 @@ public class TowerBuildUI : MonoBehaviour
 
     #region Private Methods
 
+    private static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+    {
+        return (propertyExpression.Body as MemberExpression).Member.Name;
+    }
+
     private void Initialize()
     {
         if (_prefab != null)
@@ -90,10 +96,22 @@ public class TowerBuildUI : MonoBehaviour
             _costText.text = _prefab.Cost.ToString();
         }
     }
-
-    private void HandleResourcesPropertyChanged(object sender, PropertyChangedEventArgs args)
+    
+    private void UpdateCanBuild()
     {
-        
+        _button.interactable = this.Prefab == null || ResourceManager.Money >= this.Prefab.Cost;
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    private void ResourcesPropertyChangedHandler(object sender, PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == GetPropertyName(() => ResourceManager.Money))
+        {
+            this.UpdateCanBuild();
+        }
     }
 
     #endregion
