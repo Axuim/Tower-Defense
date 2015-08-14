@@ -1,30 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &107522
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 403560}
-  - 33: {fileID: 3386818}
-  - 23: {fileID: 2324638}
-  m_Layer: 30
-  m_Name: Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &110902
+--- !u!1 &100162
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 411462}
+  - 4: {fileID: 476050}
   m_Layer: 30
   m_Name: Graphics
   m_TagString: Untagged
@@ -32,73 +15,90 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &145756
+--- !u!1 &169560
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 451226}
-  - 135: {fileID: 13551342}
-  - 54: {fileID: 5434600}
-  - 114: {fileID: 11495454}
+  - 4: {fileID: 425692}
+  - 135: {fileID: 13510882}
+  - 54: {fileID: 5433032}
+  - 114: {fileID: 11437758}
   m_Layer: 30
-  m_Name: Basic Tower
+  m_Name: Area Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &403560
+--- !u!1 &193238
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 405968}
+  - 33: {fileID: 3358704}
+  - 23: {fileID: 2344446}
+  m_Layer: 30
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405968
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 107522}
+  m_GameObject: {fileID: 193238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: .75, y: .75, z: .75}
   m_Children: []
-  m_Father: {fileID: 411462}
+  m_Father: {fileID: 476050}
   m_RootOrder: 0
---- !u!4 &411462
+--- !u!4 &425692
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 403560}
-  m_Father: {fileID: 451226}
-  m_RootOrder: 0
---- !u!4 &451226
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145756}
+  m_GameObject: {fileID: 169560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 411462}
+  - {fileID: 476050}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2324638
+--- !u!4 &476050
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 405968}
+  m_Father: {fileID: 425692}
+  m_RootOrder: 0
+--- !u!23 &2344446
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 107522}
+  m_GameObject: {fileID: 193238}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: c258986040d180841a3ce861046fa8e3, type: 2}
+  - {fileID: 2100000, guid: 3146a4114e134eb4e8162105d06c51db, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -112,19 +112,19 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3386818
+--- !u!33 &3358704
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 107522}
+  m_GameObject: {fileID: 193238}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5434600
+--- !u!54 &5433032
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145756}
+  m_GameObject: {fileID: 169560}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -134,36 +134,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &11495454
+--- !u!114 &11437758
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145756}
+  m_GameObject: {fileID: 169560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899ea6dbbd6559646a83021350bb316b, type: 3}
+  m_Script: {fileID: 11500000, guid: caea283ad5392d84aac8c865d1e10cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireDelay: .5
-  _buildables:
-  - {fileID: 11470856, guid: 7e7a617fb76a76342a6099d6c80ac40f, type: 2}
-  _name: Basic Tower
-  _previewImage: {fileID: 21300000, guid: 19c9cacba8b80c943bed4cdfc533ae2d, type: 3}
-  _cost: 3
-  _projectilePrefab: {fileID: 11438700, guid: 2ca54f8d856e33846a72b63bd768471e, type: 2}
-  _localBulletSpawnPosition: {x: 0, y: 1.5, z: 0}
---- !u!135 &13551342
+  _fireDelay: 2
+  _buildables: []
+  _name: Area Tower
+  _previewImage: {fileID: 21300000, guid: 670ed353270e14746a7b82d6a4384156, type: 3}
+  _cost: 5
+  _damage: 1
+--- !u!135 &13510882
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145756}
+  m_GameObject: {fileID: 169560}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
@@ -173,23 +171,14 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
-      propertyPath: _buildables.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
       propertyPath: _name
-      value: Basic Tower
+      value: Area Tower
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: _cost
-      value: 3
+      propertyPath: _fireDelay
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _previewImage
-      value: 
-      objectReference: {fileID: 21300000, guid: 19c9cacba8b80c943bed4cdfc533ae2d,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 145756}
+  m_RootGameObject: {fileID: 169560}
   m_IsPrefabParent: 1

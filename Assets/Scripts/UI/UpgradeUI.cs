@@ -14,6 +14,8 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField]
     private TowerBuildUI _towerBuildUIPrefab;
     [SerializeField]
+    private TowerBuildUI _deleteTowerBuildUIPrefab;
+    [SerializeField]
     private SetWidthBasedOnChildren _towerBuildUIParent;
 
     #endregion
@@ -90,8 +92,13 @@ public class UpgradeUI : MonoBehaviour
                 towerBuildUI.Clicked += this.TowerBuildUIClickedHandler;
             }
 
+            towerBuildUI = GameObject.Instantiate<TowerBuildUI>(_deleteTowerBuildUIPrefab);
+            towerBuildUI.transform.SetParent(_towerBuildUIParent.transform);
+            towerBuildUI.transform.localScale = Vector3.one;
+            towerBuildUI.Clicked += this.TowerBuildUIClickedHandler;
+
             _towerBuildUIParent.UpdateSize();
-            result = _selection.Buildables.Any();
+            result = true;
         }
 
         return result;
@@ -132,7 +139,7 @@ public class UpgradeUI : MonoBehaviour
         {
             if (_selection != null)
             {
-                _selection.BuildTower((sender as TowerBuildUI).Prefab);
+                _selection.Build((sender as TowerBuildUI).Prefab);
             }
 
             this.Cancel();

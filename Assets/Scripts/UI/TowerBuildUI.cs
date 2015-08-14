@@ -11,6 +11,8 @@ public class TowerBuildUI : MonoBehaviour
     #region Private Properties
 
     [SerializeField]
+    private Text _nameText;
+    [SerializeField]
     private Button _button;
     [SerializeField]
     private Image _previewImage;
@@ -21,7 +23,22 @@ public class TowerBuildUI : MonoBehaviour
 
     #region Public Properties
 
-    public Tower Prefab { get; set; }
+    private Tower _prefab;
+    public Tower Prefab
+    {
+        get
+        {
+            return _prefab;
+        }
+        set
+        {
+            if (value != _prefab)
+            {
+                _prefab = value;
+                this.Initialize();
+            }
+        }
+    }
 
     #endregion
 
@@ -63,6 +80,16 @@ public class TowerBuildUI : MonoBehaviour
     #endregion
 
     #region Private Methods
+
+    private void Initialize()
+    {
+        if (_prefab != null)
+        {
+            _nameText.text = _prefab.Name;
+            _previewImage.sprite = _prefab.PreviewImage;
+            _costText.text = _prefab.Cost.ToString();
+        }
+    }
 
     private void HandleResourcesPropertyChanged(object sender, PropertyChangedEventArgs args)
     {

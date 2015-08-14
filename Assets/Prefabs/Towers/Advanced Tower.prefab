@@ -147,6 +147,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireDelay: .25
   _buildables: []
+  _name: Advanced Tower
+  _previewImage: {fileID: 21300000, guid: 629ea3575342c0c4281f7337b562ff91, type: 3}
+  _cost: 10
   _projectilePrefab: {fileID: 11438700, guid: 2ca54f8d856e33846a72b63bd768471e, type: 2}
   _localBulletSpawnPosition: {x: 0, y: 1.5, z: 0}
 --- !u!135 &13576520
@@ -167,7 +170,20 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _name
+      value: Advanced Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _cost
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _previewImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 629ea3575342c0c4281f7337b562ff91,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 149184}

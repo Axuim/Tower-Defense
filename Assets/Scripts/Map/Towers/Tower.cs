@@ -40,6 +40,40 @@ public abstract class Tower : MonoBehaviour
 
     #endregion
 
+    #region Public Properties
+
+    [SerializeField]
+    private string _name = "Tower";
+    public string Name
+    {
+        get
+        {
+            return _name;
+        }
+    }
+
+    [SerializeField]
+    private Sprite _previewImage;
+    public Sprite PreviewImage
+    {
+        get
+        {
+            return _previewImage;
+        }
+    }
+
+    [SerializeField]
+    private int _cost;
+    public int Cost
+    {
+        get
+        {
+            return _cost;
+        }
+    }
+
+    #endregion
+
     #region MonoBehaviour
 
     void OnEnable()

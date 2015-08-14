@@ -108,27 +108,34 @@ public class Wall : MonoBehaviour, IAmSelectable
 
     #region Public Methods
 
-    public bool BuildTower(Tower prefab)
+    public bool Build(Tower prefab)
     {
         bool result = false;
 
-        if (this.Tower != null)
+        if (this.Tower == null && prefab == null)
         {
-            GameObject.Destroy(this.Tower.gameObject);
+            GameObject.Destroy(this.gameObject);
             result = true;
         }
-
-        if (prefab != null)
+        else
         {
-            var tower = GameObject.Instantiate<Tower>(prefab);
-            tower.transform.parent = this.transform;
-            tower.transform.localPosition = Vector3.zero;
-            tower.transform.localRotation = Quaternion.identity;
-            this.Tower = tower;
+            if (this.Tower != null)
+            {
+                GameObject.Destroy(this.Tower.gameObject);
+                result = true;
+            }
 
-            result = true;
+            if (prefab != null)
+            {
+                var tower = GameObject.Instantiate<Tower>(prefab);
+                tower.transform.parent = this.transform;
+                tower.transform.localPosition = Vector3.zero;
+                tower.transform.localRotation = Quaternion.identity;
+                this.Tower = tower;
+
+                result = true;
+            }
         }
-
         return result;
     }
 

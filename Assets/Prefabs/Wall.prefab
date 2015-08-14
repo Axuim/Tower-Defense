@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _emptyBuildables:
   - {fileID: 11495454, guid: 09dd0829558fba44bb5d410076559940, type: 2}
-  - {fileID: 11470856, guid: 7e7a617fb76a76342a6099d6c80ac40f, type: 2}
+  - {fileID: 11437758, guid: 155a7c434bf3e2b48ab97e2ce29520ab, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -159,6 +159,16 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _emptyBuildables.Array.data[2]
+      value: 
+      objectReference: {fileID: 11437758, guid: 155a7c434bf3e2b48ab97e2ce29520ab,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: _emptyBuildables.Array.data[1]
+      value: 
+      objectReference: {fileID: 11437758, guid: 155a7c434bf3e2b48ab97e2ce29520ab,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 163060}

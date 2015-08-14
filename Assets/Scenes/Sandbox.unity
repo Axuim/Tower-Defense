@@ -1812,7 +1812,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: 0}
   m_AnchorMax: {x: .5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1161010207
 MonoBehaviour:
@@ -3337,5 +3337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerBuildUIPrefab: {fileID: 11404678, guid: ae9c103c92d9c524e88c7504cf6d5a24,
+    type: 2}
+  _deleteTowerBuildUIPrefab: {fileID: 11435172, guid: b735103fcf0481d468d53f7fbc370074,
     type: 2}
   _towerBuildUIParent: {fileID: 1161010208}
