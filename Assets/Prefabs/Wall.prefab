@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32303fefb7194c04fb5fd11ea1e8224b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _emptyBuildables:
+  - {fileID: 11495454, guid: 09dd0829558fba44bb5d410076559940, type: 2}
+  - {fileID: 11470856, guid: 7e7a617fb76a76342a6099d6c80ac40f, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -148,6 +151,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _emptyBuildables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
       value: 4294967295

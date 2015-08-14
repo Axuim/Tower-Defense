@@ -103,14 +103,14 @@ public class WaveController : MonoBehaviour
     #endregion
 
     #region Event Handlers
-
+    
     private void GameStateChangedHandler(object sender, EventArgs args)
     {
         if (GameStateManager.GameState == GameStates.Playing)
         {
             this.Begin();
         }
-        else if (GameStateManager.GameState == GameStates.Preparing || GameStateManager.GameState == GameStates.Loss)
+        else if (GameStateManager.GameState == GameStates.Loss)
         {
             this.Stop();
         }

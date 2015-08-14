@@ -11,6 +11,9 @@ public class Wall : MonoBehaviour, IAmSelectable
 
     private Collider _collider;
 
+    [SerializeField]
+    private Tower[] _emptyBuildables;
+
     #endregion
 
     #region Public Properties
@@ -28,6 +31,14 @@ public class Wall : MonoBehaviour, IAmSelectable
     }
 
     public Tower Tower { get; private set; }
+    
+    public IEnumerable<Tower> Buildables
+    {
+        get
+        {
+            return this.Tower != null ? this.Tower.Buildables : _emptyBuildables;
+        }
+    }
 
     #endregion
 
@@ -68,12 +79,12 @@ public class Wall : MonoBehaviour, IAmSelectable
 
     void OnEnable()
     {
-        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging += this.GameStateChangingHandler;
     }
 
     void OnDestroy()
     {
-        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging -= this.GameStateChangingHandler;
 
         _instances.Remove(this);
 
@@ -95,11 +106,39 @@ public class Wall : MonoBehaviour, IAmSelectable
 
     #endregion
 
+    #region Public Methods
+
+    public bool BuildTower(Tower prefab)
+    {
+        bool result = false;
+
+        if (this.Tower != null)
+        {
+            GameObject.Destroy(this.Tower.gameObject);
+            result = true;
+        }
+
+        if (prefab != null)
+        {
+            var tower = GameObject.Instantiate<Tower>(prefab);
+            tower.transform.parent = this.transform;
+            tower.transform.localPosition = Vector3.zero;
+            tower.transform.localRotation = Quaternion.identity;
+            this.Tower = tower;
+
+            result = true;
+        }
+
+        return result;
+    }
+
+    #endregion
+
     #region Event Handlers
 
-    private void GameStateChangedHandler(object sender, EventArgs args)
+    private void GameStateChangingHandler(object sender, EventArgs args)
     {
-        if (GameStateManager.GameState == GameStates.Preparing)
+        if (GameStateManager.GameState == GameStates.Loss)
         {
             GameObject.Destroy(this.gameObject);
         }

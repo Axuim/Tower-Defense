@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour, IAmKillable
 
     void OnEnable()
     {
-        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging += this.GameStateChangingHandler;
         Wall.PathUpdated += this.WallsChangedHandler;
     }
 
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour, IAmKillable
             _target = null;
         }
 
-        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging -= this.GameStateChangingHandler;
         Wall.PathUpdated -= this.WallsChangedHandler;
         
         this.CleanupPath();
@@ -196,9 +196,9 @@ public class Enemy : MonoBehaviour, IAmKillable
 
     #region Event Handlers
 
-    private void GameStateChangedHandler(object sender, EventArgs args)
+    private void GameStateChangingHandler(object sender, EventArgs args)
     {
-        if (GameStateManager.GameState == GameStates.Preparing)
+        if (GameStateManager.GameState == GameStates.Loss)
         {
             GameObject.Destroy(this.gameObject);
         }

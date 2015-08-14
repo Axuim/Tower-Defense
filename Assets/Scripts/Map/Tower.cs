@@ -26,6 +26,20 @@ public abstract class Tower : MonoBehaviour
 
     #endregion
 
+    #region Public Properties
+
+    [SerializeField]
+    private Tower[] _buildables;
+    public IEnumerable<Tower> Buildables
+    {
+        get
+        {
+            return _buildables;
+        }
+    }
+
+    #endregion
+
     #region MonoBehaviour
 
     void OnEnable()

@@ -4,8 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class GameStateController : MonoBehaviour
+public class MainController : MonoBehaviour
 {
+    #region Private Properties
+
+    private Wall _selection;
+
+    [SerializeField]
+    private Camera _camera;
+    [SerializeField]
+    private LayerMask _wallLayerMask;
+
+    #endregion
+
     #region MonoBehaviour
 
     void OnEnable()
@@ -34,25 +45,62 @@ public class GameStateController : MonoBehaviour
     {
         if (GameStateManager.GameState == GameStates.Preparing)
         {
+            if (_selection != null)
+            {
+                _selection.SetSelected(false);
+                _selection = null;
+            }
+
             if (Input.GetButtonDown("Submit"))
             {
                 GameStateManager.ChangeState(GameStates.Playing);
             }
-            if (Input.GetButtonDown("Fire3"))
+            else if (Input.GetButtonDown("Fire3"))
             {
                 GameStateManager.ChangeState(GameStates.Building);
+            }
+            else if (Input.GetButtonDown("Fire1"))
+            {
+                _selection = this.SelectWall();
+                if (_selection != null)
+                {
+                    _selection.SetSelected(true);
+                    GameStateManager.ChangeState(GameStates.Upgrading);
+                }
             }
         }
         else if (GameStateManager.GameState == GameStates.Playing)
         {
+            if (_selection != null)
+            {
+                _selection.SetSelected(false);
+                _selection = null;
+            }
+
             if (Input.GetButtonDown("Fire3"))
             {
                 GameStateManager.ChangeState(GameStates.Building);
+            }
+            else if (Input.GetButtonDown("Fire1"))
+            {
+                _selection = this.SelectWall();
+                if (_selection != null)
+                {
+                    _selection.SetSelected(true);
+                    GameStateManager.ChangeState(GameStates.Upgrading);
+                }
             }
         }
         else if (GameStateManager.GameState == GameStates.Building)
         {
             if (Input.GetButton("Fire3") == false)
+            {
+                GameStateManager.RevertState();
+            }
+        }
+        else if (GameStateManager.GameState == GameStates.Upgrading)
+        {
+            if (Input.GetButtonDown("Cancel"))
             {
                 GameStateManager.RevertState();
             }
@@ -66,6 +114,24 @@ public class GameStateController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Private Methods
+
+    private Wall SelectWall()
+    {
+        Wall result = null;
+
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _wallLayerMask))
+        {
+            result = hit.collider.GetComponent<Wall>();
+        }
+
+        return result;
+    }
     #endregion
 
     #region Event Handlers

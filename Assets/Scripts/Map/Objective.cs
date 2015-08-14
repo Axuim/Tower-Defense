@@ -52,12 +52,12 @@ public class Objective : MonoBehaviour, IAmKillable, IHaveGraphics
 
     void OnEnable()
     {
-        GameStateManager.GameStateChanged += this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging += this.GameStateChangingHandler;
     }
 
     void OnDisable()
     {
-        GameStateManager.GameStateChanged -= this.GameStateChangedHandler;
+        GameStateManager.GameStateChanging -= this.GameStateChangingHandler;
     }
 
     void OnDestroy()
@@ -116,9 +116,9 @@ public class Objective : MonoBehaviour, IAmKillable, IHaveGraphics
 
     #region Event Handlers
     
-    private void GameStateChangedHandler(object sender, EventArgs args)
+    private void GameStateChangingHandler(object sender, EventArgs args)
     {
-        if (GameStateManager.GameState == GameStates.Preparing)
+        if (GameStateManager.GameState == GameStates.Loss)
         {
             this.Initialize();
         }
