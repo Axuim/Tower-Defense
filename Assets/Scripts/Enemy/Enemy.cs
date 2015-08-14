@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour, IAmKillable
         }
     }
 
+    public float DistanceToObjective { get; private set; }
+
     #endregion
 
     #region Events
@@ -56,6 +58,7 @@ public class Enemy : MonoBehaviour, IAmKillable
         }
 
         this.Health = this.MaxHealth;
+        this.DistanceToObjective = float.MaxValue;
     }
 
     void OnDestroy()
@@ -133,17 +136,20 @@ public class Enemy : MonoBehaviour, IAmKillable
             {
                 _path.Release(this);
             }
-
+            
             _path = path;
             _path.Claim(this);
-
+            
             _pathIndex = 0;
+            //Update distanec to objective.
+            this.DistanceToObjective = _path.GetTotalLength();
         }
     }
 
     private void PathTo(Vector3 position)
     {
         this.CleanupPath();
+        this.DistanceToObjective = float.MaxValue;
         _seeker.StartPath(this.transform.position, position, this.OnPathingComplete);
     }
 
@@ -175,6 +181,9 @@ public class Enemy : MonoBehaviour, IAmKillable
 
                 Vector3 direction = (targetPosition - this.transform.position).normalized;
                 direction *= _speed * Time.deltaTime;
+
+                //Update distance to objective.
+                this.DistanceToObjective -= direction.magnitude;
 
                 //No collision checking.
                 //Local avoidance and collision later maybe.

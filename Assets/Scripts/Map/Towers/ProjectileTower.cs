@@ -32,7 +32,7 @@ public class ProjectileTower : Tower
 
         if (result)
         {
-            var target = this.TargetQueue.FirstOrDefault();
+            var target = this.TargetQueue.OrderBy(e => e.DistanceToObjective).FirstOrDefault();
             if (target != null)
             {
                 var bullet = GameObject.Instantiate<Projectile>(_projectilePrefab);
